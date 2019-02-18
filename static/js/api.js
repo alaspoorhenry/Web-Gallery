@@ -17,23 +17,6 @@ let api = (function(){
         }
     }
 
-    /*  ******* Data types *******
-        image objects must have at least the following attributes:
-            - (String) imageId 
-            - (String) title
-            - (String) author
-            - (String) url
-            - (Date) date
-    
-        comment objects must have the following attributes
-            - (String) commentId
-            - (String) imageId
-            - (String) author
-            - (String) content
-            - (Date) date
-    
-    ****************************** */ 
-    
     let getCommentsAllAJ = function(callback){
         send("GET", "/api/comments/", null, callback);
     };
