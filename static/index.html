@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Web Gallery</title>
+    <link href="style/styles.css" rel="stylesheet"/>
+    <link href="style/pagination.css" rel="stylesheet"/>
+</head>
+<body>
+
+    <div id = "overall_wrapper">
+        <div class = "initial_box">
+            <div class = "flex-header">
+                    <header>
+                        <a href="/" id="title">Web Gallery</a>
+                    </header>
+            </div>
+        </div>
+        <div id = "button_init_wrapper">
+                <button id = "toggle_button_form">Toggle Form</button>
+        </div>
+
+        <p id="error_box"></p>
+
+        <div class="super_form">
+            <form class="complex_form" id="create_image_form" action='/api/images/' method="POST" enctype="multipart/form-data"> 
+                <div class="form_title">Post an Image</div>
+                <input id="image_name" type="text" class="form_element" name="image_name" placeholder="Enter your image's title" required/>
+                <input id="author_name" type="text" class="form_element" name="author_name" placeholder="Enter the author's name" required/>
+                <input type="file" id="image_url" class="form_element" name="image_url" required/>
+                <button type="submit">Post your message</button>
+            </form>
+        </div>
+
+        <div id="complex_display"> 
+        </div>
+
+        <div class="bottom_wrapper">
+            <img id="left_arrowI" alt="Left Toggle Arrow" src="media/left_arrow.png"/> 
+            <img id="right_arrowI" alt="Right Toggle Arrow" src="media/right_arrow.png"/>
+        </div>
+
+        <div class = "comment_form">
+                <form class="complex_form" id="create_comment_form">
+                        <div class="form_title">Post a comment</div>
+                        <input id="author_name_content" class="form_element" name="comment_name" placeholder="Enter the author's name" required/>
+                        <textarea id="comment_content" class="form_element" name="comment_content" rows ="5" placeholder="Enter your comment" required></textarea>
+                        <button type="submit">Post your message</button>
+                </form>
+         </div>
+
+         <div id="comment_section">
+         </div>
+
+        <div class="bottom_wrapper">
+            <img id="left_arrowC" alt="Left Comment Toggle Arrow" src="media/left_arrow.png"/> 
+            <img id="right_arrowC" alt="Right Comment Toggle Arrow" src="media/right_arrow.png"/>
+        </div>
+
+    </div>
+    <footer>
+        <a href='credits.html'>credits</a>
+    </footer>
+    <script src="js/api.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
