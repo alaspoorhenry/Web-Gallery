@@ -2,11 +2,16 @@
 (function(){
     "use strict";
 
+    //current user w/ person's gallery
+    //the cookie should contain this information in the username key-value pair
+    let currentUser = null;
+
+    let currentGalleryUser = null;
     let currentImageId = null;
     let currentImages = null;
     let currentComments = [];
     let currentPage = 1;
-    const page = 2;
+    const page = 10;
 
     //Code below by Christoph and mb21 at https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
     let isEmpty = function(obj) {
@@ -25,6 +30,42 @@
       };
 
     window.onload = function(){
+
+        currentUser = api.getCurrentUser();
+        if (!currentUser){
+            //display selection of galleries
+            document.querySelector('#signup-wrapper').classList.remove('hidden');
+        } else {
+            //display sign up page
+            currentGalleryUser = currentUser;
+            document.querySelector('#gallery-wrapper').classList.remove('hidden');
+        }
+
+        api.onUserUpdate(function(usernames){
+            document.querySelector("#post_username").innerHTML = "";
+            usernames.forEach(function(username){
+                var elmt = document.createElement('option');
+                elmt.value = username._id;
+                elmt.innerHTML= username._id;
+                document.querySelector("#post_username").prepend(elmt);
+            });
+        });
+        
+        document.querySelector('#signup').addEventListener('click',function(){
+            var form = document.querySelector('#user-btns');
+            form.style.display = "none";
+            var form_2 = document.querySelector('#signup-form');
+            form_2.style.visibility = "visible";
+        });
+
+        document.querySelector('#signin').addEventListener('click',function(){
+            //switch to signin form
+            var form = document.querySelector('#user-btns');
+            form.style.display = "none";
+            var form_2 = document.querySelector('#signin-form');
+            form_2.style.visibility = "visible";
+        });
+
 
         api.onError(function(err){
             var error_box = document.querySelector('#error_box');
@@ -109,13 +150,50 @@
             document.querySelector('#complex_display').prepend(elmt);
         };
 
+        let trimm = function(arr, authname){
+            var ret = arr.filter(element => element.authorname == authname);
+            return ret;
+        }
+
+        window.newUser = function(){
+            var bol = ((!currentImages)||(isEmpty(currentImages)));
+            if (currentImages){
+                currentGalleryUser = document.querySelector('#post_username').value;
+                currentImages = trimm(currentImages, currentGalleryUser);
+                if (!currentImageId){
+                    if (currentImages.length > 0) return replaceImage(currentImages[0]);
+                    return;
+                }
+                let image = currentImages.find(function(imageIn){
+                    return (imageIn._id == currentImageId);
+                });
+                replaceImage(image);
+            } else if (bol){
+                api.onImageUpdate(function(images){
+                    currentImages = images;
+                    currentGalleryUser = document.querySelector('#post_username').value;
+                    currentImages = trimm(currentImages, currentGalleryUser);
+                    if (!currentImageId){
+                        if (currentImages.length > 0) return replaceImage(currentImages[0]);
+                        return;
+                    }
+                    let image = currentImages.find(function(imageIn){
+                        return (imageIn._id == currentImageId);
+                    });
+                    replaceImage(image);
+                });
+            }
+        }
+
         api.onImageUpdate(function(images){
             currentImages = images;
+            currentGalleryUser = document.querySelector('#post_username').value;
+            currentImages = trimm(currentImages, currentGalleryUser);
             if (!currentImageId){
-                if (images.length > 0) return replaceImage(images[0]);
+                if (currentImages.length > 0) return replaceImage(currentImages[0]);
                 return;
             }
-            let image = images.find(function(imageIn){
+            let image = currentImages.find(function(imageIn){
                 return (imageIn._id == currentImageId);
             });
             replaceImage(image);
@@ -184,11 +262,10 @@
 
         document.querySelector('#create_comment_form').addEventListener('submit', function(e){
             e.preventDefault();
-            var author_comment_name = document.querySelector('#author_name_content').value;
             var content = document.querySelector('#comment_content').value;
             document.querySelector('#create_comment_form').reset();
             if (!(isEmpty(currentImages))) {
-                api.addComment(currentImageId, content, author_comment_name);
+                api.addComment(currentImageId, content);
             }
         });
     };

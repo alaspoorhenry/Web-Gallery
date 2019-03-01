@@ -7,61 +7,88 @@
     <link href="style/pagination.css" rel="stylesheet"/>
 </head>
 <body>
-
     <div id = "overall_wrapper">
+        <p id="error_box"></p>
         <div class = "initial_box">
-            <div class = "flex-header">
-                    <header>
-                        <a href="/" id="title">Web Gallery</a>
-                    </header>
+                <div class = "flex-header">
+                        <header>
+                            <a href="/" id="title">Web Gallery</a>
+                        </header>
+                </div>
+        </div>
+        <div id="gallery-wrapper" class="hidden">
+            <div id = "button_init_wrapper">
+                    <button id = "toggle_button_form">Toggle Form</button>
+                    <label class="form_element">Select user gallery
+                        <!-- onchange="myfunc()" -->
+                        <select id="post_username" class="form_element" onChange="newUser()">
+                        </select>
+                    </label>
+                    <a href="/signout/" id="signout" class="btn header_btn">Sign out</a>
+            </div>
+
+            <div class="super_form">
+                <form class="complex_form" id="create_image_form" action='/api/images/' method="POST" enctype="multipart/form-data"> 
+                    <div class="form_title">Post an Image</div>
+                    <input id="image_name" type="text" class="form_element" name="image_name" placeholder="Enter your image's title" required/>
+                    <input type="file" id="image_url" class="form_element" name="image_url" required/>
+                    <button type="submit">Post your message</button>
+                </form>
+            </div>
+
+            <div id="complex_display">
+            </div>
+
+            <div class="bottom_wrapper">
+                <img id="left_arrowI" alt="Left Toggle Arrow" src="media/left_arrow.png"/> 
+                <img id="right_arrowI" alt="Right Toggle Arrow" src="media/right_arrow.png"/>
+            </div>
+
+            <div class="comment_form">
+                    <form class="complex_form" id="create_comment_form">
+                            <div class="form_title">Post a comment</div>
+                            <textarea id="comment_content" class="form_element" name="comment_content" rows ="5" placeholder="Enter your comment" required></textarea>
+                            <button type="submit">Post your message</button>
+                    </form>
+            </div>
+
+            <div id="comment_section">
+            </div>
+
+            <div class="bottom_wrapper">
+                <img id="left_arrowC" alt="Left Comment Toggle Arrow" src="media/left_arrow.png"/> 
+                <img id="right_arrowC" alt="Right Comment Toggle Arrow" src="media/right_arrow.png"/>
             </div>
         </div>
-        <div id = "button_init_wrapper">
-                <button id = "toggle_button_form">Toggle Form</button>
+        <div id="signup-wrapper" class="hidden">
+                <div class="super_form_2" id="user-btns">
+                    <button type="submit" id="signin" class="btn header_btn">Sign in</button>
+                    <button type="submit" id="signup" class="btn header_btn">Sign up</button>
+                </div>
+                <div class="super_form_2" id="signin-form">
+                    <form class="complex_form" action='/signin/' method="POST">
+                        <div class="form_title">Enter your sign in information</div>
+                        <input id="signin-name" class="form_element" name="username" placeholder="Enter your username" required/>
+                        <input id="signin-password" class="form_element" name="password" placeholder="Enter your password" required/>    
+                        <button type="submit">Sign in</button>
+                    </form>
+                    <a href="/" class="back_btn btn header_btn">Back</a>
+                </div>
+                <div class="super_form_2" id="signup-form">
+                    <form class="complex_form" action='/signup/' method="POST">
+                        <div class="form_title">Enter your sign up information</div>
+                        <input id="signup-name" class="form_element" name="username" placeholder="Enter your username" required/>
+                        <input id="signup-password" class="form_element" name="password" placeholder="Enter your password" required/>            
+                        <button type="submit">Sign up</button>
+                    </form>
+                    <a href="/" class="back_btn btn header_btn">Back</a>
+                </div>
         </div>
-
-        <p id="error_box"></p>
-
-        <div class="super_form">
-            <form class="complex_form" id="create_image_form" action='/api/images/' method="POST" enctype="multipart/form-data"> 
-                <div class="form_title">Post an Image</div>
-                <input id="image_name" type="text" class="form_element" name="image_name" placeholder="Enter your image's title" required/>
-                <input id="author_name" type="text" class="form_element" name="author_name" placeholder="Enter the author's name" required/>
-                <input type="file" id="image_url" class="form_element" name="image_url" required/>
-                <button type="submit">Post your message</button>
-            </form>
-        </div>
-
-        <div id="complex_display"> 
-        </div>
-
-        <div class="bottom_wrapper">
-            <img id="left_arrowI" alt="Left Toggle Arrow" src="media/left_arrow.png"/> 
-            <img id="right_arrowI" alt="Right Toggle Arrow" src="media/right_arrow.png"/>
-        </div>
-
-        <div class = "comment_form">
-                <form class="complex_form" id="create_comment_form">
-                        <div class="form_title">Post a comment</div>
-                        <input id="author_name_content" class="form_element" name="comment_name" placeholder="Enter the author's name" required/>
-                        <textarea id="comment_content" class="form_element" name="comment_content" rows ="5" placeholder="Enter your comment" required></textarea>
-                        <button type="submit">Post your message</button>
-                </form>
-         </div>
-
-         <div id="comment_section">
-         </div>
-
-        <div class="bottom_wrapper">
-            <img id="left_arrowC" alt="Left Comment Toggle Arrow" src="media/left_arrow.png"/> 
-            <img id="right_arrowC" alt="Right Comment Toggle Arrow" src="media/right_arrow.png"/>
-        </div>
-
+        <footer>
+             <a href='credits.html'>credits</a>
+             <script src="js/api.js"></script>
+             <script src="js/script.js"></script>
+        </footer>
     </div>
-    <footer>
-        <a href='credits.html'>credits</a>
-    </footer>
-    <script src="js/api.js"></script>
-    <script src="js/script.js"></script>
 </body>
 </html>

@@ -17,6 +17,28 @@ let api = (function(){
         }
     }
 
+    module.getCurrentUser = function(){
+        var username = document.cookie.split("username=")[1];
+        if (username.length == 0) return null;
+        return username;
+    };
+    /*  ******* Data types *******
+        image objects must have at least the following attributes:
+            - (String) imageId 
+            - (String) title
+            - (String) author
+            - (String) url
+            - (Date) date
+    
+        comment objects must have the following attributes
+            - (String) commentId
+            - (String) imageId
+            - (String) author
+            - (String) content
+            - (Date) date
+    
+    ****************************** */ 
+    
     let getCommentsAllAJ = function(callback){
         send("GET", "/api/comments/", null, callback);
     };
@@ -42,8 +64,8 @@ let api = (function(){
         });
     };
 
-    module.addComment = function(imId, content, author){
-        send("POST", "/api/comments/", {imageId: imId, imagename: author, content: content} , function(err, res){
+    module.addComment = function(imId, content){
+        send("POST", "/api/comments/", {imageId: imId, content: content} , function(err, res){
             if (err) return notifyErrorListeners(err);
             notifyCommentListeners();
         });
@@ -65,11 +87,38 @@ let api = (function(){
         notifyItemListeners();
     };
 
+    let userListeners = [];
+
+    module.onUserUpdate = function(listener){ //listener 2?
+        userListeners.push(listener);
+        getUsers(function(err, users){
+            if (err) return notifyErrorListeners(err);
+            listener(users);
+        });
+    };
+
+    let getUsers = function(callback){
+        send("GET", "/api/users/", null, callback);
+    };
+
     let itemListeners = [];
 
     let getImagesAllAJ = function(callback){
         send("GET", "/api/images/", null, callback);
     };
+
+    let getImagesUsername = function(username, callback){
+        send("GET", "/api/images/"+username+"/", null, callback);
+    };
+
+    function notifyNewItemListeners(username){
+        getImagesUsername(username, function(err,images){
+            if (err) return notifyErrorListeners(err);
+            itemListeners.forEach(function(listener){
+                listener(images);
+            });
+        });
+    }
 
     function notifyItemListeners(){
         getImagesAllAJ(function(err, images){
