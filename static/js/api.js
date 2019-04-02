@@ -149,6 +149,10 @@ let api = (function(){
         });
     }
     
+    document.newUser = function() {
+        notifyItemListeners();
+    }
+
     module.onError = function(listener){
         errorListeners.push(listener);
     };

@@ -52,6 +52,10 @@ header {
     justify-content: center;
 }
 
+.comment_form {
+    margin-top: 10px; 
+}
+
 .comment {
     margin-top: 20px;
     border-radius: 10px;
@@ -103,7 +107,7 @@ header {
     padding: 70px 0;
     display: flex;
     justify-content: center;
-    align-content: column;
+    align-items: center;
     width: 500px;
     height: 200px;
 }
@@ -176,7 +180,7 @@ header {
 
 .bottom_wrapper {
     margin-top: 20px ;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     display: flex;
     justify-content: space-around;
     height: 50px;
