@@ -1,6 +1,6 @@
 Web gallery app made with HTML/CSS/JavaScript. NEDB used for backend and Express.js for routing.
 
-### Heading 
+### Running the thing
   
 To run, do the following commands while in the Web-Gallery-C09 directory.
   
