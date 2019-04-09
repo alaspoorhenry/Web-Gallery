@@ -2,7 +2,7 @@ Web gallery app made with HTML/CSS/JavaScript. NEDB used for backend and Express
 
 ### Running the thing
   
-To run, do the following commands while in the Web-Gallery-C09 directory.
+To run, do the following commands while in the Web-Gallery directory.
   
 ```
 npm install
