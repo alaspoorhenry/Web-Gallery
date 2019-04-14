@@ -1,4 +1,4 @@
-Web gallery app made with HTML/CSS/JavaScript. NEDB used for backend and Express.js for routing.
+Web gallery app made with HTML/CSS/JavaScript. NEDB used as a database and Express.js for routing/backend framework.
 
 ### Running the thing
   
