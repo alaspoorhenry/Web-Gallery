@@ -4,7 +4,6 @@ const app = express();
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
-
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -59,7 +58,6 @@ app.use(function(req, res, next){
     next();
 });
 
-//Shouldn't really be called b/c of the way my gallery is
 var isAuthenticated = function(req, res, next){
     if (!req.username) return res.status(401).end("access denied");
     next();
@@ -131,7 +129,7 @@ app.post('/signin/', function (req, res, next) {
 });
 
 //comment post
-app.post('/api/comments/', function(req, res, next){
+app.post('/api/comments/', isAuthenticated, function(req, res, next){
     var comment = new Comment(req.body, req.username); //response body should have all relevant info
     comments.insert(comment, function(err, doc){
         if (err) return res.status(500).end(err);
@@ -194,7 +192,7 @@ app.get("/api/images/:username", function(req, res, next){
 });
 
 //delete comment given id
-app.delete("/api/comments/:id", function(req,res,next){
+app.delete("/api/comments/:id", isAuthenticated, function(req,res,next){
     var intP = parseInt(req.params.id);
     comments.findOne({_id: intP}, function(err, doc){
         if (err) return res.status(500).end(err);
@@ -206,7 +204,7 @@ app.delete("/api/comments/:id", function(req,res,next){
     });
 });
 
-app.post('/api/images/', upload.single('image_url'), function(req, res, next){
+app.post('/api/images/', isAuthenticated , upload.single('image_url'), function(req, res, next){
     var image = new Image(req.body, req.username, req.file);
     images.insert(image, function(err, doc){
         if (err) return res.status(500).end(err);

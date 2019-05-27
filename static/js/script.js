@@ -1,4 +1,5 @@
 /*jshint esversion: 6 */
+// todo: refactor frontend with react
 (function(){
     "use strict";
 
